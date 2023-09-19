@@ -4,13 +4,32 @@ Copy this into a `recipe.md` in your project and fill it out.
 
 ## 1. Describe the Problem
 
+As a user
+So that I can manage my time
+I want to see an estimate of reading time for a text, assuming that I can read 200 words a minute.
+
 _Put or write the user story here. Add any clarifying notes you might have._
 
 ## 2. Design the Function Signature
 
+def reading_time(text, speed):
+    return "This text will take you x hours to read based on a reading spped of x words per minute."
+
 _Include the name of the function, its parameters, return value, and side effects._
 
 ```python
+def reading_time(200 words):
+    return 1 hour
+
+def reading_time(400 words):
+    return 2 hour
+
+def reading_time(100 words):
+    return 0.5 hour
+
+def reading_time(0 words):
+    return error
+
 # EXAMPLE
 
 def extract_uppercase(mixed_words):
@@ -33,6 +52,12 @@ def extract_uppercase(mixed_words):
 _Make a list of examples of what the function will take and return._
 
 ```python
+
+Given a text of 200 words, it should return reading time of 1 hour.
+def test_reading_time_200_words():
+    result = reading_time(200)
+    assert result == 1
+
 # EXAMPLE
 
 """
