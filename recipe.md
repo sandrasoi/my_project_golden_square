@@ -12,8 +12,8 @@ _Put or write the user story here. Add any clarifying notes you might have._
 
 ## 2. Design the Function Signature
 
-def reading_time(text, speed):
-    return "This text will take you x hours to read based on a reading spped of x words per minute."
+def reading_time(text):
+    return "This text will take you x hours to read based on a reading spped of 200 words per minute."
 
 _Include the name of the function, its parameters, return value, and side effects._
 
