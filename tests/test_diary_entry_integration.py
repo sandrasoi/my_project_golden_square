@@ -31,14 +31,24 @@ def test_count_words_single_entry():
     assert result == 2
 
 
-'''def test_adds_two_entries_reading_time_for_all_entries():
+def test_adds_two_entries_reading_time_for_all_entries():
     diary = Diary()
     diary_entry1 = DiaryEntry("title1", "One Two")
     diary_entry2 = DiaryEntry("title2", "Three Four Five")
     diary.add(diary_entry1)
     diary.add(diary_entry2)
     result = diary.reading_time(1)
-    assert result == 5'''
+    assert result == 5
 
+def test_best_entry_to_read_given_wpm1_time_2():
+    diary = Diary()
+    diary_entry1 = DiaryEntry("title1", "One Two")
+    diary_entry2 = DiaryEntry("title2", "Three Four Five")
+    diary_entry3 = DiaryEntry("title2", "Six Seven Eight Nine")
+    diary.add(diary_entry1)
+    diary.add(diary_entry2)
+    diary.add(diary_entry3)
+    result = diary.find_best_entry_for_reading_time(1,2)
+    assert result == "One Two"
 
 #Diary doesn't have parameters, has add method that calls instance of diary entry
