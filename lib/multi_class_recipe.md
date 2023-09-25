@@ -1,4 +1,4 @@
-# {{PROBLEM}} Multi-Class Planned Design Recipe
+# Journal Multi-Class Planned Design Recipe
 
 ## 1. Describe the Problem
 
@@ -28,111 +28,177 @@ _Consider diagramming out the classes and their relationships. Take care to
 focus on the details you see as important, not everything. The diagram below
 uses asciiflow.com but you could also use excalidraw.com, draw.io, or miro.com_
 
-```
-┌────────────────────────────┐
-│ MusicPlayer                │
-│                            │
-│ - tracks                   │
-│ - add(track)               │
-│ - search_by_title(keyword) │
-│   => [tracks...]           │
-└───────────┬────────────────┘
-            │
-            │ owns a list of
-            ▼
-┌─────────────────────────┐
-│ Track(title, artist)    │
-│                         │
-│ - title                 │
-│ - artist                │
-│ - format()              │
-│   => "TITLE by ARTIST"  │
-└─────────────────────────┘
-```
+
+  ┌───────────────────────────────────────────────┐
+  │  class Diary()                                │
+  │                                               │
+  │  diary_entries()                              │
+  │                                               │
+  │  todo_list()                                  │
+  │                                               │
+  │  phone_number_list()                          │
+  │                                               │
+  │  find_best_entry_for_reading_time(wpm,minutes)│
+  │                                               │
+  │                                               │
+  └─────────────────┬─────────────────────────────┘
+                    │
+                    │
+                    ▼
+  ┌─────────────────────────────────────┐
+  │  class DiaryEntry(title, contents)  │
+  │                                     │
+  │    self.title = tile                │
+  │    self.contents = contents         │
+  │                                     │
+  │   is_todo()                         │
+  │                                     │
+  │   is_phone_number()                 │
+  │                                     │
+  │   count_words()                     │
+  │                                     │
+  │   reading_time(wpm)                 │
+  └─────────────────────────────────────┘
+
 
 _Also design the interface of each class in more detail._
 
-```python
-class MusicLibrary:
-    # User-facing properties:
-    #   tracks: list of instances of Track
+class Diary():
 
     def __init__(self):
-        pass # No code here yet
+        self.entry_list
 
-    def add(self, track):
-        # Parameters:
-        #   track: an instance of Track
-        # Side-effects:
-        #   Adds the track to the tracks property of the self object
-        pass # No code here yet
+    def add(title, contents):
+        Params:
+            title: str
+            contents: str
+        Effect:
+            add entry to a list
 
-    def search_by_title(self, keyword):
+    def diary_entries(self):
+        Params:
+            None
+        Returns:
+            A list of all diary entries
+
+    def todo_list():
+        Params:
+            None
+        Returns:
+            A list of all todo entries
+
+    def phone_number_list():
+        Params:
+            None
+        Returns:
+            A list of all phone numbers
+
+    def find_best_entry_for_reading_time(wpm, minutes):
         # Parameters:
-        #   keyword: string
+            #   wpm:     an integer representing the number of words the user can
+            #            read per minute
+            #   minutes: an integer representing the number of minutes the user has
+            #            to read
         # Returns:
-        #   A list of the Track objects that have titles that include the keyword
-        pass # No code here yet
+            #   A list of all diary entries that meet the criteria (within the given time and reading speed)
 
+class DiaryEntry(title, contents):
 
-class Track:
-    # User-facing properties:
-    #   title: string
-    #   artist: string
+    def __init__(self, title, contents):
+        self.title = title
+        self.contents = contents
 
-    def __init__(self, title, artist):
-        # Parameters:
-        #   title: string
-        #   artist: string
-        # Side-effects:
-        #   Sets the title and artist properties
-        pass # No code here yet
+    def is_todo():
+        Param:
+            None
+        Effects:
+            Return boolean if todo is in the contents
 
-    def format(self):
-        # Returns:
-        #   A string of the form "TITLE by ARTIST"
-        pass # No code here yet
+    def is_phone_number():
+        Param:
+            None
+        Effect:
+            Return boolean if phone number is in the contents
+    
+    def count_words():
+        Param:
+            None
+        Return:
+            Length of content
 
-```
+    def reading_time(wpm):
+        Param: 
+            wpm: words per minute (int)
+        Returns:
+            Time taken to read content
 
 ## 3. Create Examples as Integration Tests
 
 _Create examples of the classes being used together in different situations and
 combinations that reflect the ways in which the system will be used._
 
-```python
-# EXAMPLE
-
 """
-Given a library
-When we add two tracks
-We see those tracks reflected in the tracks list
+Given multiple entries added
+Return list of entries
 """
-library = MusicLibrary()
-track_1 = Track("Carte Blanche", "Veracocha")
-track_2 = Track("Synaesthesia", "The Thrillseekers")
-library.add(track_1)
-library.add(track_2)
-library.tracks # => [track_1, track_2]
-```
+diary = Diary()
+diary_entry1 = DiaryEntry("Title1", "Contents1")
+diary_entry2 = DiaryEntry("Title2", "Contents2")
+diary.add(diary_entry1)
+diary.add(diary_entry2)
+diary.diary_entries() => [diary_entry1, diary_entry2]
 
-## 4. Create Examples as Unit Tests
+def test_best_entry_to_read_given_wpm1_time_2():
+    diary = Diary()
+    diary_entry1 = DiaryEntry("title1", "One Two")
+    diary_entry2 = DiaryEntry("title2", "Three Four Five")
+    diary_entry3 = DiaryEntry("title2", "Six Seven Eight Nine")
+    diary.add(diary_entry1)
+    diary.add(diary_entry2)
+    diary.add(diary_entry3)
+    result = diary.find_best_entry_for_reading_time(1,2)
+    assert result == "One Two"
 
-_Create examples, where appropriate, of the behaviour of each relevant class at
-a more granular level of detail._
+def test_best_entry_to_read_given_wpm1_time_2():
+    diary = Diary()
+    diary_entry0 = DiaryEntry("title0", 'One')
+    diary_entry1 = DiaryEntry("title1", "One Two")
+    diary_entry2 = DiaryEntry("title2", "Three Four Five")
+    diary_entry3 = DiaryEntry("title2", "Six Seven Eight Nine")
+    diary.add(diary_entry1)
+    diary.add(diary_entry2)
+    diary.add(diary_entry3)
+    result = diary.find_best_entry_for_reading_time(1,2)
+    assert result == [diary_entry0, diary_entry1]
 
-```python
-# EXAMPLE
+def test_phone_number_list():
+    diary = Diary()
+    diary_entry0 = DiaryEntry("title0", 'words words words 07802000000')
+    diary_entry1 = DiaryEntry("title1", "One Two")
+    diary_entry2 = DiaryEntry("title2", "07802123456")
+    diary_entry3 = DiaryEntry("title2", "Six Seven Eight Nine")
+    diary.add(diary_entry1)
+    diary.add(diary_entry2)
+    diary.add(diary_entry3)
+    result = diary.phone_number_list()
+    assert result == [07802000000, 07802123456]
 
-"""
-Given a track with a title and an artist
-We see the title reflected in the title property
-"""
-track = Track("Carte Blanche", "Veracocha")
-track.title # => "Carte Blanche"
-```
+def test_list_of_todos(): 
+    diary = Diary()
+    diary_entry0 = DiaryEntry("title0", '07802000000')
+    diary_entry1 = DiaryEntry("title1", "Todo One Two")
+    diary_entry2 = DiaryEntry("title2", "07802123456")
+    diary_entry3 = DiaryEntry("title2", "Todo Six Seven Eight Nine")
+    diary.add(diary_entry1)
+    diary.add(diary_entry2)
+    diary.add(diary_entry3)
+    result = diary.todo_list()
+    assert result == ["Todo One Two", "Todo Six Seven Eight Nine"]
 
-_Encode each example as a test. You can add to the above list as you go._
+#Diary doesn't have parameters, has add method that calls instance of diary entry
+
+
+
 
 ## 5. Implement the Behaviour
 
