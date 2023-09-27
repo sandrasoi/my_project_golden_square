@@ -1,5 +1,5 @@
-from lib.diary_entry_class_system import DiaryEntry
-from lib.diary_class_system import Diary
+from lib.diary_entry_class_system import *
+from lib.diary_class_system import*
 
 """"
 Adds two diary entries to Diary and returns all entries
@@ -49,6 +49,6 @@ def test_best_entry_to_read_given_wpm1_time_2():
     diary.add(diary_entry2)
     diary.add(diary_entry3)
     result = diary.find_best_entry_for_reading_time(1,2)
-    assert result == "One Two"
+    assert result == diary_entry1
 
-#Diary doesn't have parameters, has add method that calls instance of diary entry
+#Diary doesn't have parameters, has add method that calls instance of diary entry'''

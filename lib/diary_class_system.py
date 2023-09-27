@@ -1,5 +1,5 @@
 # File: lib/diary.py
-from diary_entry_class_system import DiaryEntry
+#from diary_entry_class_system import DiaryEntry
 
 
 class Diary:
@@ -46,8 +46,12 @@ class Diary:
         
 
     def find_best_entry_for_reading_time(self, wpm, minutes):
-        result = sorted(self.diary_entries, key= [entry.count_words() for entry in self.diary_entries])
-        return result
+        for entry in self.diary_entries:
+            if entry.reading_time(wpm) <= minutes:
+                return entry
+        
+        #result = sorted(self.diary_entries, key= [entry.count_words() for entry in self.diary_entries])
+        #return result
         # Parameters:
         #   wpm:     an integer representing the number of words the user can
         #            read per minute
@@ -57,7 +61,7 @@ class Diary:
         #   An instance of DiaryEntry representing the entry that is closest to,
         #   but not over, the length that the user could read in the minutes
         #   they have available given their reading speed.
-        pass
+        
 
 #sort entries by length
 
@@ -67,6 +71,7 @@ class Diary:
 #iterate through entries list and find content that is exactly that length 
 #and if not then less
 
+'''
 diary = Diary()
 diary_entry1 = DiaryEntry("title1", "One Two")
 diary_entry2 = DiaryEntry("title2", "Three Four Five")
@@ -75,7 +80,8 @@ diary.add(diary_entry1)
 diary.add(diary_entry2)
 diary.add(diary_entry3)
 result = diary.find_best_entry_for_reading_time(1,2)
-print(result)
+print(result)'''
 
 #new_list = [entry.count_words() for entry in diary.diary_entries]
 #print(new_list)
+
